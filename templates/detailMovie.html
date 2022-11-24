@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Hemaroo</title>
+        <link href="/static/hagimaru.png" rel="icon" type="image/gif"/>
+        <script src="/static/tailwindcss.js"></script>
+        <link rel="stylesheet" href="/static/plyr.css">
+        <script src="/static/hls.js"></script>
+    </head>
+    <body class="overflow-x-hidden mb-5">
+        <nav class="bg-[#191A1B] sticky top-0 z-20">
+            <div class="mx-auto px-2 sm:px-6 lg:px-8">
+                <div class="relative flex h-16 items-center justify-between">
+                    <div class="flex flex-1 items-center justify-start">
+                        <div class="flex flex-shrink-0 mr-8">
+                            <img class="block h-10 w-auto lg:hidden" src="/static/shemaroo_logo.svg" alt="Your Company">
+                            <img class="hidden h-10 w-auto lg:block" src="/static/shemaroo_logo.svg" alt="Your Company">
+                        </div>
+                        <div class="hidden sm:ml-6 sm:block">
+                            <div class="flex">
+                                <a href="/" class="w-fit p-4 text-white font-bold border-b-[5px] border-red-600">Home</a>
+                                <a href="#" class="w-fit p-4 text-gray-300 hover:text-white hover:font-bold hover:border-b-[5px] hover:border-red-600 transition-all">Movie</a>
+                                <a href="#" class="w-fit p-4 text-gray-300 hover:text-white hover:font-bold hover:border-b-[5px] hover:border-red-600 transition-all">Shows</a>
+                                <a href="#" class="w-fit p-4 text-gray-300 hover:text-white hover:font-bold hover:border-b-[5px] hover:border-red-600 transition-all">Channels</a>
+                                <a href="#" class="w-fit p-4 text-gray-300 hover:text-white hover:font-bold hover:border-b-[5px] hover:border-red-600 transition-all">Live</a>
+                                <a href="#" class="w-fit p-4 text-gray-300 hover:text-white hover:font-bold hover:border-b-[5px] hover:border-red-600 transition-all">Browse</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+                        <div class="relative ml-3">
+                            <button type="button" class="flex rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
+                                <img class="h-8 w-8 rounded-full" src="/static/search_not_selected.svg" alt="">
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="sm:hidden bg-[#222222]" id="mobile-menu">
+                <div class="space-y-1 px-2 pt-2 pb-3 flex flex-nowrap">
+                    <a href="/" class="text-white font-bold border-b-[5px] border-red-600 block px-3 py-2 text-base font-medium" aria-current="page">Home</a>
+                    <a href="#" class="text-gray-300 hover:text-white hover:font-bold hover:border-b-[5px] hover:border-red-600 block px-3 py-1 text-base font-medium">Movie</a>
+                    <a href="#" class="text-gray-300 hover:text-white hover:font-bold hover:border-b-[5px] hover:border-red-600 block px-3 py-1 text-base font-medium">Shows</a>
+                    <a href="#" class="text-gray-300 hover:text-white hover:font-bold hover:border-b-[5px] hover:border-red-600 block px-3 py-1 text-base font-medium">Channels</a>
+                    <a href="#" class="text-gray-300 hover:text-white hover:font-bold hover:border-b-[5px] hover:border-red-600 block px-3 py-1 text-base font-medium">Live</a>
+                    <a href="#" class="text-gray-300 hover:text-white hover:font-bold hover:border-b-[5px] hover:border-red-600 block px-3 py-1 text-base font-medium">Live</a>
+                </div>
+            </div>
+        </nav>
+        <div class="m-3 mx-64 flex flex-nowrap text-[#35444E] hidden md:flex">
+            {% for data in dataObj.pathList %}
+            <a href="{{data.0}}" class="underline">{{data.1}}</a>
+            <h1 class="bg-[#35444E] rounded-full h-2 w-2 m-2"></h1>
+            {%endfor%}
+            <h1 class="font-bold">{{dataObj.title}}</h1>
+        </div>
+        <div class="rounded-none mt-0 md:mt-5 xl:mt-5 md:rounded-lg xl:rounded-xl mx-0 md:mx-32 xl:mx-64 overflow-hidden">
+            <video controls crossorigin playsinline poster="" id="player">
+            </video>
+        </div>
+        <div class="rounded-none md:rounded-lg xl:rounded-xl mx-0 md:mx-32 xl:mx-64 overflow-hidden">
+            <div class="m-3 flex flex-nowrap text-[#35444E] block md:hidden">
+                {% for data in dataObj.pathList %}
+                <a href="{{data.0}}" class="underline">{{data.1}}</a>
+                <h1 class="bg-[#35444E] rounded-full h-2 w-2 m-2"></h1>
+                {%endfor%}
+                <h1 class="font-bold">{{dataObj.title}}</h1>
+            </div>
+            <div class="font-bold text-3xl text-[#35444E] ml-3">
+                {{dataObj.title}}
+            </div>
+            <div class="mx-3 mt-1 flex flex-nowrap text-gray-500">
+                {% for data in dataObj.catagoriesArr %}
+                <h1 class="text-xs border-2 border-gray-400 rounded-md px-1 mr-1">{{data}}</h1>
+                {%endfor%}
+            </div>
+        </div>
+        <div class="rounded-none md:rounded-lg xl:rounded-xl mx-0 md:mx-10 overflow-hidden">
+            <div>
+                <h1 class="m-3 mb-0 font-bold text-xl text-[#35444E] border-b-4 border-green-400 w-fit">Synopsis</h1>
+                <h1 class="mx-3 mt-0 text-[#35444E] font-thin border-t-4">{{dataObj.movieDataArr.0}}</h1>
+            </div>
+            <div>
+                <h1 class="m-3 mb-0 font-bold text-xl text-[#35444E]">Starring</h1>
+                <h1 class="mx-3 mt-0 text-[#35444E] font-thin">{{dataObj.movieDataArr.1}}</h1>
+            </div>
+            <div>
+                <h1 class="m-3 mb-0 font-bold text-xl text-[#35444E]">Directed By</h1>
+                <h1 class="mx-3 mt-0 text-[#35444E] font-thin">{{dataObj.movieDataArr.2}}</h1>
+            </div>
+        </div>
+        <div class="px-3 mx-0 md:mx-10 mb-10">
+            <div class="flex flex-nowrap justify-between">
+                <h1 class="text-3xl font-bold text-[#35444E]">You may also like</h1>
+                <button class="text-md font-bold text-blue-500">See All</button>
+            </div>
+            <div class="flex flex-nowrap gap-2 mt-2">
+                {% for data in dataObj.youMayLikeArr %}
+                <img ondblclick="javascript:location.href='{{data.0}}'" class="rounded-lg w-32 lg:w-48 z-0 hover:scale-125 hover:z-10 transition-all" src="{{data.1}}" alt="">
+                {%endfor%}
+            </div>
+        </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', () => { 
+                const player = new Plyr('#player');
+                window.player = player;
+                function on(selector, type, callback) {
+                    document.querySelector(selector).addEventListener(type, callback, false);
+                }
+            });
+        </script>
+        <script>
+            var video = document.getElementById('player');
+            var videoSrc = "{{movieUrl}}";
+            if (Hls.isSupported()) {
+                var hls = new Hls({
+                debug: true,
+                });
+                hls.loadSource(videoSrc);
+                hls.attachMedia(video);
+                hls.on(Hls.Events.MEDIA_ATTACHED, function () {
+                video.muted = false;
+                //video.play();
+                });
+            }
+            else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+                video.src = videoSrc;
+            }
+        </script>
+    </body>
+</html>
